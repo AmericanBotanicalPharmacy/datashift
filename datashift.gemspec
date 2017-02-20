@@ -4,7 +4,7 @@ require 'rake'
   
 Gem::Specification.new do |s|
   s.name = "datashift"
-  s.version = "0.16.0"
+  s.version = "0.16.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   

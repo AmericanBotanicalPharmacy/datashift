@@ -221,7 +221,7 @@ module DataShift
       op = operator + '=' unless(operator.include?('='))
 
       begin
-        record.send(op, value)
+        record.send(op, value) unless value.blank?
       rescue => e
 
         Populator::insistent_method_list.each do |f|
