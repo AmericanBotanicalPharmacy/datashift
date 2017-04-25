@@ -200,9 +200,13 @@ module DataShift
         if Rails::VERSION::STRING < '4.2.0'
           logger.debug("Assign #{current_value} => [#{operator}] (CAST 2 TYPE  #{current_col_type.type_cast( current_value ).inspect})")
           record.send( operator + '=' , current_method_detail.col_type.type_cast( current_value ) )
-        else
+        elsif Rails::VERSION::STRING < '5.0.0'
           logger.debug("Assign #{current_value} => [#{operator}] (CAST 2 TYPE  #{current_col_type.type_cast_from_database( current_value ).inspect})")
           record.send( operator + '=' , current_method_detail.col_type.type_cast_from_database( current_value ) )
+        else
+          value = ActiveModel::Type::Value.new.deserialize(current_value)
+          logger.debug("Assign #{current_value} => [#{operator}] (CAST 2 TYPE  #{value.inspect})")
+          record.send( operator + '=' , value )
         end
 
       elsif( current_method_detail.operator_for(:assignment) )
